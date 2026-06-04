@@ -1,3 +1,13 @@
+> ## 🍴 Fork note
+>
+> This is a **fork** of **[Ian Xiaohei Illustrations](https://github.com/helloianneo/ian-xiaohei-illustrations)** by **Ian ([@helloianneo](https://github.com/helloianneo))**, MIT-licensed. **The original concept, the 小黑 (Xiaohei) character, and the entire visual style are Ian's** — full credit to the original author.
+>
+> This fork keeps the Xiaohei identity intact and adds: **Claude Code support** (tool-agnostic rendering — Codex `image_gen` / image-gen MCP / ready-to-paste prompts), a **fully-English skill** (`ian-xiaohei-illustrations-en/`), **bring-your-own-mascot** (Xiaohei becomes a swappable default character), and **reproducibility optimizations** (seed discipline, render manifest, cost guard, in-image text verification). `LICENSE` and `NOTICE.md` are unchanged.
+>
+> 這個 fork 在完全保留小黑 identity 的前提下，加了 Claude 支援、全英文版 skill、可換吉祥物、可重現性優化。原作者 Ian 的 README 原文如下，未改動 ↓
+
+---
+
 # Ian Xiaohei Illustrations
 
 > 把中文文章里的判断、流程、状态和隐喻，变成一张张白底、手绘、怪诞但清爽的正文配图。
