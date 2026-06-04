@@ -1,0 +1,6 @@
+interface:
+  display_name: "Xiaohei Illustrations (EN)"
+  short_description: "Generate deadpan hand-drawn Xiaohei explainer illustrations for articles (English-first)."
+  default_prompt: "Use $ian-xiaohei-illustrations-en to design and generate a few explainer illustrations (Xiaohei by default) for this article."
+policy:
+  allow_implicit_invocation: true
