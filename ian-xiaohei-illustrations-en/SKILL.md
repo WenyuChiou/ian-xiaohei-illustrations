@@ -21,6 +21,7 @@ This is a fully English-authored skill. The visual style is language-agnostic, s
 - `references/prompt-template.md` — the single-image generation prompt template.
 - `references/qa-checklist.md` — post-generation checks and iteration rules.
 - `references/custom-ip-template.md` — scaffold for `references/custom-ip.md` when a user brings their own character (copy and fill in).
+- `references/manifest-template.md` — scaffold for the per-article `manifest.md` (records each image's prompt, seed, placement, and alt-text).
 - `assets/examples/` — low-frequency visual calibration only (line density, whitespace, color restraint, how Xiaohei participates). Do NOT copy their compositions.
 
 ## Bring your own character (custom IP)
@@ -48,7 +49,7 @@ If the user only asks "what should I illustrate / where do images help", return 
 
 ### 3. Single generation (tool-agnostic)
 
-If the user clearly asks to "generate / output / make the image", don't stop to confirm. Generate each image separately — never tile multiple images into one.
+If the user clearly asks to "generate / output / make the image", generate each image separately — never tile multiple images into one. **Cost guard:** for 1–3 images, generate directly; for **more than 3** images, first show the shot list with a one-line note ("N images on `<tool>`; image generation usually costs per image") and get a quick OK before batch-generating. Don't silently fan out a dozen renders.
 
 First resolve the **active IP character**: if the user supplied a custom IP (a description or a sample image), use `references/custom-ip.md`; otherwise default to Xiaohei.
 
@@ -58,13 +59,17 @@ Pick the image tool by availability (do NOT hardcode one vendor):
 2. An image-generation MCP (e.g. `mcp__image-gen__generate_image`, set `aspect_ratio="16:9"`, `output_format="png"`, `num_outputs=1`) → use it. Text-to-image models (Flux family) render English text reasonably; keep labels to ≤4 total, each ≤4 words, to reduce rendering errors.
 3. No image tool available → don't pretend to generate. For each shot, output a ready-to-paste English prompt from `references/prompt-template.md`. That is a valid deliverable, not a failure.
 
+**Seed discipline (character consistency + reproducibility):** pick ONE integer seed for the whole article and pass it to the image tool for every image (on backends that expose a seed, e.g. Flux; seedless backends like GPT-image / Codex `image_gen` keep the character consistent through the stable textual description instead), so the recurring character stays visually consistent across all of them. Record each image's seed (see the manifest in step 5). To re-roll a single image without disturbing the others, change only that image's seed. If the active IP profile defines a `seed`, use it as the base.
+
 Each image explains exactly one core structure. The prompt must include: 16:9 horizontal; pure white background; black hand-drawn line art; sparse red/orange/blue handwritten English labels; lots of whitespace; Xiaohei as the subject of the core action; and forbid PPT / commercial / cute / complex-architecture / top-left type-title.
 
 Do not copy past cases. Examples only calibrate style density and how Xiaohei participates. Reinvent a fresh, strange-but-coherent metaphor for THIS text every time.
 
 ### 4. QA and iterate
 
-Check against `references/qa-checklist.md`. Regenerate or locally edit if: Xiaohei is mere decoration; the frame is too full; it looks like a flowchart / PPT; too much text or many typos; a top-left title appears; it's too cute / childish / rigid; or the background isn't clean white.
+Check against `references/qa-checklist.md`. Regenerate or locally edit if: the active IP character is mere decoration; the frame is too full; it looks like a flowchart / PPT; too much text or many typos; a top-left title appears; it's too cute / childish / rigid; or the background isn't clean white.
+
+**Verify the rendered text (the #1 failure mode):** after generating, look at the image you just produced and read its labels back. If any handwritten label is garbled, misspelled, or wrong, regenerate with fewer / shorter labels, switch the label language on a weak renderer, or fall back to a **text-free image plus a caption written below it**. Bound this to ~2 retries per image; if the text still fails, deliver the text-free image + caption rather than shipping garbled words.
 
 ### 5. Save and deliver
 
@@ -75,6 +80,8 @@ assets/<article-slug>-illustrations/
 ```
 
 Name them in order: `01-topic.png`, `02-topic.png`, ... Keep the original generations; don't overwrite existing assets unless the user explicitly asks to replace.
+
+Alongside the images, write `manifest.md` (use `references/manifest-template.md`) recording, per image: filename, where it goes in the article, theme, structure type, the seed, the tool used, a one-line alt-text, and — in the template's Prompts section, since prompts are long — the exact prompt used. This makes every image reproducible and individually re-rollable, and the alt-text covers accessibility (blogs, Notion, screen readers).
 
 ## Output discipline
 

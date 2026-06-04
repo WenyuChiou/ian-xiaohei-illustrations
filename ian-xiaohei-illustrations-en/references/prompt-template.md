@@ -36,6 +36,11 @@ Constraints:
 One image explains only one core structure. Keep the main subject around 40%-60% of the canvas. Preserve at least 35% blank white space. Use at most 5 short handwritten labels. Do not write a title in the top-left corner. Do not write the structure type on the image. Do not make it a formal diagram, course slide, or dense explainer. Do not copy prior examples or reuse known case compositions unless explicitly requested; invent a fresh visual metaphor for this specific article. It should be clear but not instructional, interesting but not childish, strange but clean.
 ```
 
+## Generation parameters (pass these to the image tool, not as prompt text)
+
+- **aspect_ratio** = `16:9` by default (or the user's chosen ratio — square for social, vertical for mobile / Notion).
+- **seed** = the article's **shared** integer seed: use the *same* seed for every image in one article so the recurring character stays consistent. Change it only to re-roll a single image. If the active IP profile sets a `seed`, use that as the base. (Flux-family backends honor `seed`; GPT-image / Codex `image_gen` ignore it — there, character consistency comes from the stable textual description.)
+
 ## Image editing prompts
 
 > Note: the edit prompts below need a tool that can take an input image and modify it (inpaint / edit), e.g. Codex's `image_gen`. Pure text-to-image MCPs (Flux / `mcp__image-gen__generate_image`) cannot edit an existing image — instead regenerate with fewer labels, or write `no title in the top-left corner` into the prompt up front to avoid the title at the source.
