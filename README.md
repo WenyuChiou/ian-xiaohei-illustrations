@@ -4,7 +4,37 @@
 >
 > This fork keeps the Xiaohei identity intact and adds: **Claude Code support** (tool-agnostic rendering — Codex `image_gen` / image-gen MCP / ready-to-paste prompts), a **fully-English skill** (`ian-xiaohei-illustrations-en/`), **bring-your-own-mascot** (Xiaohei becomes a swappable default character), and **reproducibility optimizations** (seed discipline, render manifest, cost guard, in-image text verification). `LICENSE` and `NOTICE.md` are unchanged.
 >
-> 這個 fork 在完全保留小黑 identity 的前提下，加了 Claude 支援、全英文版 skill、可換吉祥物、可重現性優化。原作者 Ian 的 README 原文如下，未改動 ↓
+> 這個 fork 在完全保留小黑 identity 的前提下，加了 Claude 支援、全英文版 skill、可換吉祥物、可重現性優化。下面先是**英文版 skill** 的安裝與使用，再接原作者 Ian 的中文 README，未改動 ↓
+
+---
+
+## Using the English skill (`ian-xiaohei-illustrations-en`)
+
+This fork ships a **fully-English, bring-your-own-mascot** variant in `ian-xiaohei-illustrations-en/`. Same hand-drawn, deadpan, white-background look — English-authored, with a swappable character.
+
+**Install:**
+
+```bash
+git clone https://github.com/WenyuChiou/ian-xiaohei-illustrations.git
+cd ian-xiaohei-illustrations
+# Claude Code (personal scope — available in every project):
+cp -R ./ian-xiaohei-illustrations-en "$HOME/.claude/skills/"
+# or OpenAI Codex:
+cp -R ./ian-xiaohei-illustrations-en "${CODEX_HOME:-$HOME/.codex}/skills/"
+```
+
+**Use** — just ask in English, e.g. *"illustrate this blog post — 4 hand-drawn deadpan explainer images"*, or *"make a shot list for this article (don't generate yet)."*
+
+**What it adds:**
+
+- **Bring your own mascot** — the default "Xiaohei" is swappable; drop in your own character (a description, or a sample image) via `references/custom-ip.md`. The one rule: your character must *perform* the core action, not just decorate.
+- **Adjustable axes** — `aspect_ratio` (16:9 / 1:1 / 9:16), a swappable **style profile** (palette / line / background), and `annotation_lang` (English / bilingual).
+- **Reproducible** — one seed per article for character consistency, plus a `manifest.md` recording each image's prompt / seed / placement / alt-text.
+- **Objective QA** — `tools/check_image.py` asserts each render's aspect ratio and whitespace.
+
+**Rendering is tool-agnostic:** it uses Codex's built-in `image_gen` (best for in-image text), or an image-generation MCP (e.g. Flux via `mcp__image-gen__generate_image`), or — if neither is available — it emits ready-to-paste prompts. Note: Flux-class models render English in-image text more reliably than CJK, so English / bilingual labels look cleanest there.
+
+The original concept, the Xiaohei character, and the visual style are **Ian's** — see his README below. MIT-licensed.
 
 ---
 
