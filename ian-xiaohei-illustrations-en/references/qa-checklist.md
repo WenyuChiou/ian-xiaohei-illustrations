@@ -15,6 +15,18 @@
 - Red only for key points, problems, reminders, or results.
 - Blue only for secondary notes, feedback, or system state.
 
+## Machine-checkable QA (objective)
+
+The checks above are subjective. Two of them can be verified mechanically — use the repo's helper as a hard gate on each saved PNG:
+
+```bash
+python tools/check_image.py assets/<slug>-illustrations/01-topic.png --aspect 16:9
+```
+
+It asserts (1) the image really is the target aspect ratio, and (2) at least ~35% of pixels are near-white (the "lots of whitespace" rule). If you are not inside the repo, do the same two checks inline: read the PNG dimensions for the ratio, and estimate the near-white pixel fraction. (The helper's whitespace check needs Pillow; without it, only the aspect check is enforced.)
+
+For the **labels**, the objective check is a read-back: look at the generated image, read each handwritten label, and compare it to the label you intended. A mismatch (typo / garbled / wrong word) is a fail — regenerate with fewer / shorter labels, or fall back to a text-free image + caption (SKILL.md step 4). This stays a vision read-back because only you know the intended text.
+
 ## Failure signals (regenerate or locally edit)
 
 - A top-left title like "Common Pitfalls / Workflow / System Architecture / Roadmap".
