@@ -124,8 +124,8 @@ def check_skill(d: Path) -> None:
 
     # 4. bring-your-own-IP invariant (only for skills that ship the custom-ip mechanism)
     if (refs_dir / "custom-ip-template.md").exists():
-        if not re.search(r"performs?\s+the\s+core", text, re.I):
-            err(name, "BYO-IP skill: SKILL.md is missing the 'perform(s) the core action' invariant")
+        if not (re.search(r"performs?\s+the\s+core", text, re.I) or "核心动作" in text):
+            err(name, "BYO-IP skill: SKILL.md is missing the 'perform(s) the core action' / '承担核心动作' invariant")
         qa = refs_dir / "qa-checklist.md"
         if not qa.exists():
             err(name, "BYO-IP skill: references/qa-checklist.md is missing (cannot verify the invariant)")
@@ -133,10 +133,10 @@ def check_skill(d: Path) -> None:
             qa_text = read(qa, name, "references/qa-checklist.md")
             if qa_text is not None:
                 qa_plain = re.sub(r"[*_`]", "", qa_text)  # strip inline markdown formatting
-                if re.search(r"^\s*-\s*xiaohei is present", qa_plain, re.M | re.I):
-                    err(name, "BYO-IP skill: qa-checklist must-pass hardcodes 'Xiaohei is present' (use 'active IP character')")
-                if "active IP character" not in qa_text:
-                    warn(name, "BYO-IP skill: qa-checklist never says 'active IP character' — verify must-pass is character-agnostic")
+                if re.search(r"^\s*-\s*(xiaohei is present|有小黑)", qa_plain, re.M | re.I):
+                    err(name, "BYO-IP skill: qa-checklist must-pass hardcodes the default mascot (use 'active IP character' / '当前 IP 角色')")
+                if not ("active IP character" in qa_text or "当前 IP" in qa_text or "当前IP" in qa_text):
+                    warn(name, "BYO-IP skill: qa-checklist never says 'active IP character' / '当前 IP 角色' — verify must-pass is character-agnostic")
 
     # 5. no Chinese / Japanese sentences in an English skill body
     if name.endswith("-en"):

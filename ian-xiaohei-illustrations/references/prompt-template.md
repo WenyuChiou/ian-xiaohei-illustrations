@@ -3,7 +3,7 @@
 每张图单独生成。根据正文内容替换变量，不要把多张图拼在一起。
 
 ```text
-Generate one standalone 16:9 horizontal Chinese article illustration.
+Generate one standalone {aspect ratio, default 16:9} horizontal Chinese article illustration.
 
 Visual DNA:
 Pure white background. Minimalist black hand-drawn line art. Slightly wobbly pen lines. Lots of empty white space. Sparse red/orange/blue handwritten Chinese annotations. Clean absurd product-sketch feeling. No gradients, no shadows, no paper texture, no complex background, no commercial vector style, no PPT infographic look, no cute mascot poster, no children's illustration, no realistic UI.
