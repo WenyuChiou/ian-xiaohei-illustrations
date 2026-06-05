@@ -49,6 +49,14 @@ For the **labels**, the objective check is a read-back: look at the generated im
 - **Too like an old case**: keep the core meaning; swap the main object and Xiaohei's action.
 - **Text errors**: prefer a local edit; if there are many errors, regenerate with fewer labels.
 
+## Across the article (set-level)
+
+- The images share the chosen **visual motif** (one world), so the set reads as one sketchbook — while each image still does one idea.
+- The recurring character looks **consistent** across images (same seed where the backend supports it; otherwise a stable textual description).
+- The aspect ratio and annotation language are **uniform** across the set unless the user set different ones per image (a per-article choice is still uniform within the set).
+- If labels keep failing on a weak renderer, switch the **whole** article to text-free + captions — a consistent choice, not a mix.
+- If one image's world drifts from the motif, add a one-phrase motif anchor to its prompt (e.g. "inside a cluttered workshop,") and regenerate — don't let the set fragment.
+
 ## Delivery judgment
 
 A good image should first feel "a bit strange", then become clear within one second.

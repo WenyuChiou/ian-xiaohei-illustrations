@@ -56,6 +56,8 @@ Read the article, link, Notion page, Markdown, or screenshot. Extract: the core 
 
 ### 2. Shot list first
 
+First pick ONE **article-level visual motif** — a shared world / object family / setting / recurring prop that every image lives in, so the whole set reads as one sketchbook rather than N unrelated drawings. Record it in the manifest (step 5) and reuse it across the article; each image still does exactly ONE idea — the motif is the shared skin, not a repeated composition. Worked example: motif = "a cluttered workshop"; one image has the IP character at a strange lathe, another weighing two pipes, another patching a leaky valve — same ambient world, a fresh composition every time.
+
 If the user only asks "what should I illustrate / where do images help", return a shot list before generating anything. For each shot, write: where it goes, theme, core idea, structure type, what the active IP character is doing, suggested elements, and suggested short labels in the chosen language. Default 4–8 shots; 1–3 for short pieces; rarely exceed 9. Enough is enough — don't turn the article into a picture book.
 
 ### 3. Single generation (tool-agnostic)
@@ -74,7 +76,9 @@ Pick the image tool by availability (do NOT hardcode one vendor):
 
 Each image explains exactly one core structure. The prompt must include: the chosen aspect ratio (16:9 by default); pure white background (or the active style profile); black hand-drawn line art; sparse red/orange/blue handwritten labels in the chosen language (English by default); lots of whitespace; the active IP character as the subject of the core action; and forbid PPT / commercial / cute / complex-architecture / top-left type-title.
 
-Do not copy past cases. Examples only calibrate style density and how Xiaohei participates. Reinvent a fresh, strange-but-coherent metaphor for THIS text every time.
+Do not copy past cases. Examples only calibrate style density and how Xiaohei participates. Reinvent a fresh, strange-but-coherent metaphor for THIS text every time — while keeping the article's motif as the ambient setting, never as the composition itself.
+
+**Text-free mode (optional, robust):** generate the image with NO in-image labels, and write the caption — what the labels would have said — as plain text BELOW the image. Use it when in-image text matters but the renderer is weak (e.g. Flux with CJK), or when the user wants clean label-free images. The image carries the metaphor; the caption carries the words. This sidesteps the #1 failure mode (garbled text) entirely. It is **both** a deliberate upfront choice **and** the target of the step 4 fallback — apply it to the whole article, not image-by-image, and if you choose it upfront, skip step 4's text-verify retry loop for that article.
 
 ### 4. QA and iterate
 

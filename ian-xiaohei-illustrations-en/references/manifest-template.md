@@ -2,6 +2,8 @@
 
 After generating, write this as `manifest.md` inside `assets/<article-slug>-illustrations/`. It makes every image reproducible, individually re-rollable, and accessible.
 
+**Article-level** (fill in after the step-2 shot list): slug `<article-slug>` · motif `<the shared visual motif>` · base seed `<int>` (per-image seeds may diverge after a re-roll) · annotation_lang `<en / … >` · aspect `<16:9 / … >`
+
 | # | file | placement (after which paragraph / section) | theme | structure type | seed | tool | alt-text |
 |---|------|---------------------------------------------|-------|----------------|------|------|----------|
 | 01 | 01-trust.png | after the "building trust" paragraph | trust is laid one piece of evidence at a time | concept metaphor | 4217 | codex image_gen | "A small creature lays evidence bricks to build a path toward a door labelled trust." |
