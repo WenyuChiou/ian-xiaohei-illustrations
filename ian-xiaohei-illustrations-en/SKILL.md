@@ -7,7 +7,7 @@ description: Generate hand-drawn, deadpan "Xiaohei" explainer illustrations for 
 
 ## Core positioning
 
-Design and generate 16:9 horizontal explainer illustrations for written content. The goal is NOT commercial illustration, a PPT infographic, or a cute cartoon — it is to turn one key judgment, workflow, structure, state, or metaphor from the text into a clean, absurd, hand-drawn explainer image that is readable but never a user manual.
+Design and generate explainer illustrations for written content — 16:9 horizontal by default, parameterizable to other aspect ratios. The goal is NOT commercial illustration, a PPT infographic, or a cute cartoon — it is to turn one key judgment, workflow, structure, state, or metaphor from the text into a clean, absurd, hand-drawn explainer image that is readable but never a user manual.
 
 The default visual IP is **Xiaohei**: a small solid-black creature with white dot eyes, thin legs, and a blank deadpan expression, earnestly doing one absurd-but-coherent job. Xiaohei must perform the core action of the image — never stand beside it as decoration.
 
@@ -21,12 +21,13 @@ This is a fully English-authored skill. The visual style is language-agnostic, s
 - `references/prompt-template.md` — the single-image generation prompt template.
 - `references/qa-checklist.md` — post-generation checks and iteration rules.
 - `references/custom-ip-template.md` — scaffold for `references/custom-ip.md` when a user brings their own character (copy and fill in).
+- `references/custom-style-template.md` — scaffold for `references/custom-style.md` when you want a different palette / line / background (copy and fill in).
 - `references/manifest-template.md` — scaffold for the per-article `manifest.md` (records each image's prompt, seed, placement, and alt-text).
 - `assets/examples/` — low-frequency visual calibration only (line density, whitespace, color restraint, how Xiaohei participates). Do NOT copy their compositions.
 
 ## Bring your own character (custom IP)
 
-Xiaohei is the **default** character, not a hard requirement. A user can swap in their own mascot or icon; everything else (white background, hand-drawn line art, color discipline, composition rules) stays identical.
+Xiaohei is the **default** character, not a hard requirement. A user can swap in their own mascot or icon; everything else (the active style profile, color discipline, composition rules) stays identical.
 
 Two ways to seed a custom IP:
 
@@ -37,6 +38,16 @@ Two ways to seed a custom IP:
 
 When a custom IP profile is active, use it everywhere the prompt template says "the IP character"; otherwise default to Xiaohei (`references/xiaohei-ip.md`).
 
+## Adjustable axes (aspect · style · language)
+
+Three things are parameters with **backward-compatible defaults** — leave them alone and you get today's behavior; set them when a use-case needs it.
+
+- **Aspect ratio** — default **16:9** (article body). Use **1:1** for social, **9:16 / 3:4** for mobile or Notion. Pass it to the image tool (`aspect_ratio`) and record it in the manifest. The composition rules don't change; only the frame does.
+- **Style profile** — default is `references/style-dna.md` (white background, black hand-drawn line, sparse red/orange/blue). To change palette, line, or background, copy `references/custom-style-template.md` to `references/custom-style.md` and use it instead. The structure types, the one-core-idea rule, and the perform-the-core-action invariant stay the same regardless of style.
+- **Annotation language** (`annotation_lang`) — default **en** (English labels). Options: `en`; the article's own language; or `bilingual` (main label + a tiny gloss in the second language). This changes ONLY the label language, never the visual style. On weak text renderers (Flux family), Latin text renders most reliably, so prefer English or bilingual there.
+
+When a custom style, non-default language, or non-16:9 aspect is active, apply it everywhere the prompt template and QA reference the default.
+
 ## Workflow
 
 ### 1. Digest the text
@@ -45,7 +56,7 @@ Read the article, link, Notion page, Markdown, or screenshot. Extract: the core 
 
 ### 2. Shot list first
 
-If the user only asks "what should I illustrate / where do images help", return a shot list before generating anything. For each shot, write: where it goes, theme, core idea, structure type, what Xiaohei is doing, suggested elements, and suggested short English labels. Default 4–8 shots; 1–3 for short pieces; rarely exceed 9. Enough is enough — don't turn the article into a picture book.
+If the user only asks "what should I illustrate / where do images help", return a shot list before generating anything. For each shot, write: where it goes, theme, core idea, structure type, what the active IP character is doing, suggested elements, and suggested short labels in the chosen language. Default 4–8 shots; 1–3 for short pieces; rarely exceed 9. Enough is enough — don't turn the article into a picture book.
 
 ### 3. Single generation (tool-agnostic)
 
@@ -56,12 +67,12 @@ First resolve the **active IP character**: if the user supplied a custom IP (a d
 Pick the image tool by availability (do NOT hardcode one vendor):
 
 1. Built-in `image_gen` (Codex) → use it directly. Strongest at in-image text; supports edit / inpaint.
-2. An image-generation MCP (e.g. `mcp__image-gen__generate_image`, set `aspect_ratio="16:9"`, `output_format="png"`, `num_outputs=1`) → use it. Text-to-image models (Flux family) render English text reasonably; keep labels to ≤4 total, each ≤4 words, to reduce rendering errors.
+2. An image-generation MCP (e.g. `mcp__image-gen__generate_image`, set `aspect_ratio` (default "16:9"), `output_format="png"`, `num_outputs=1`) → use it. Text-to-image models (Flux family) render English text reasonably; keep labels to ≤4 total, each ≤4 words, to reduce rendering errors.
 3. No image tool available → don't pretend to generate. For each shot, output a ready-to-paste English prompt from `references/prompt-template.md`. That is a valid deliverable, not a failure.
 
 **Seed discipline (character consistency + reproducibility):** pick ONE integer seed for the whole article and pass it to the image tool for every image (on backends that expose a seed, e.g. Flux; seedless backends like GPT-image / Codex `image_gen` keep the character consistent through the stable textual description instead), so the recurring character stays visually consistent across all of them. Record each image's seed (see the manifest in step 5). To re-roll a single image without disturbing the others, change only that image's seed. If the active IP profile defines a `seed`, use it as the base.
 
-Each image explains exactly one core structure. The prompt must include: 16:9 horizontal; pure white background; black hand-drawn line art; sparse red/orange/blue handwritten English labels; lots of whitespace; Xiaohei as the subject of the core action; and forbid PPT / commercial / cute / complex-architecture / top-left type-title.
+Each image explains exactly one core structure. The prompt must include: the chosen aspect ratio (16:9 by default); pure white background (or the active style profile); black hand-drawn line art; sparse red/orange/blue handwritten labels in the chosen language (English by default); lots of whitespace; the active IP character as the subject of the core action; and forbid PPT / commercial / cute / complex-architecture / top-left type-title.
 
 Do not copy past cases. Examples only calibrate style density and how Xiaohei participates. Reinvent a fresh, strange-but-coherent metaphor for THIS text every time.
 

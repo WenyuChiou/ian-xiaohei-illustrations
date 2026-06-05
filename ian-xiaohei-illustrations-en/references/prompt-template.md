@@ -1,12 +1,12 @@
 # Single-image generation prompt template
 
-Generate each image separately. Replace the variables with the current content; don't tile multiple images together.
+Generate each image separately. Replace the variables with the current content; don't tile multiple images together. Also substitute the active **aspect ratio** and — if a custom style profile is active — its **background / line / palette** into the Visual DNA below before sending.
 
 ```text
-Generate one standalone 16:9 horizontal article illustration.
+Generate one standalone {aspect ratio — default 16:9 horizontal; 1:1 square or 9:16 vertical if chosen} article illustration.
 
 Visual DNA:
-Pure white background. Minimalist black hand-drawn line art. Slightly wobbly pen lines. Lots of empty white space. Sparse red/orange/blue handwritten labels. Clean absurd product-sketch feeling. No gradients, no shadows, no paper texture, no complex background, no commercial vector style, no PPT infographic look, no cute mascot poster, no children's illustration, no realistic UI.
+{Background — default pure white}. Minimalist black hand-drawn line art (or the active style profile's line / palette). Slightly wobbly pen lines. Lots of empty white space. Sparse red/orange/blue handwritten labels. Clean absurd product-sketch feeling. No gradients, no shadows, no paper texture, no complex background, no commercial vector style, no PPT infographic look, no cute mascot poster, no children's illustration, no realistic UI.
 
 Recurring IP character required (use the active IP profile; default = Xiaohei):
 {the active IP character — by default Xiaohei: a small solid-black absurd creature with white dot eyes, tiny thin legs, blank serious expression, slightly uneven hand-drawn body shape}. The character must perform the core conceptual action, not decorate the scene. Keep it serious, deadpan, and slightly bizarre, not cute.
@@ -26,7 +26,7 @@ Composition:
 Suggested elements:
 {element 1} / {element 2} / {element 3} / {element 4}
 
-Handwritten labels (English, short):
+Handwritten labels ({annotation_lang} — default English, short):
 {label 1} / {label 2} / {label 3} / {label 4} / {optional label 5}
 
 Color use:
@@ -48,7 +48,7 @@ One image explains only one core structure. Keep the main subject around 40%-60%
 Remove a top-left title:
 
 ```text
-Edit the provided image. Remove only the handwritten title "{text to remove}" and its underline from the top-left corner. Fill that area with the same clean white background, matching the surrounding blank paper. Preserve everything else exactly: characters, labels, paths, line style, composition, aspect ratio, and image quality. Do not add any new text or objects.
+Edit the provided image. Remove only the handwritten title "{text to remove}" and its underline from the top-left corner. Fill that area to match the surrounding background (clean white by default), blending with the blank area around it. Preserve everything else exactly: characters, labels, paths, line style, composition, aspect ratio, and image quality. Do not add any new text or objects.
 ```
 
 Make Xiaohei more central to the idea:

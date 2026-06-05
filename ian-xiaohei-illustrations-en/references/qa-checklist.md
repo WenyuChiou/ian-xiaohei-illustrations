@@ -2,8 +2,8 @@
 
 ## Must pass
 
-- 16:9 horizontal.
-- Clean white background.
+- The chosen aspect ratio (16:9 by default).
+- Background matches the active style profile (default: clean white).
 - The active IP character is present (Xiaohei by default; your custom character if one is active).
 - The active IP character carries the core action, not just decoration.
 - No copied old composition — a fresh metaphor for this text.

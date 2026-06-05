@@ -37,8 +37,9 @@ REPO = Path(__file__).resolve().parent.parent
 CJK_RUN = re.compile(r"[぀-ヿ㐀-䶿一-鿿豈-﫿]{4,}")
 
 # Reference files created at runtime (by the user / agent); absence is OK and they
-# must not trigger orphan warnings either.
-RUNTIME_REFS = {"custom-ip.md", "manifest.md"}
+# must not trigger orphan warnings either. (Their *-template.md scaffolds are
+# committed files, checked normally by the mention-scan — do NOT add those here.)
+RUNTIME_REFS = {"custom-ip.md", "manifest.md", "custom-style.md"}
 
 errors: list[str] = []
 warnings: list[str] = []

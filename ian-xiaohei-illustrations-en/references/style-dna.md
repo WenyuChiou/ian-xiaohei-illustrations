@@ -8,11 +8,11 @@ Like someone who has worked on AI, product, design, and dev tools for years, ske
 
 ## Must
 
-- 16:9 horizontal body illustration.
+- Horizontal body illustration at the chosen aspect ratio (16:9 by default).
 - Pure white background: no beige, warm gray, paper texture, gradient, shadow, noise, or vintage paper.
 - Black hand-drawn line art as the base: thin lines, slight wobble, not mechanical, not vector, not heavy strokes.
 - Lots of whitespace: subject ~40%–60% of the frame, at least 35% empty, ideally one calm empty block.
-- Sparse handwritten labels: at most 5 spots, each ideally 1–3 short words (English). On a Flux-family renderer, prefer ≤4.
+- Sparse handwritten labels: at most 5 spots, each ideally 1–3 short words (annotation_lang — default English). On a Flux-family renderer, prefer ≤4, and prefer Latin-script labels.
 - One image expresses only one core action, structure, state, or metaphor.
 - Express structure naturally; do not write the structure-type name on the image.
 
